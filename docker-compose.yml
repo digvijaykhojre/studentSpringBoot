@@ -1,19 +1,28 @@
 services:
-
-
-  db:
-    image: mariadb:10.5
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    restart: always
-    volumes:
-      - db_data:/var/lib/mysql
+  mysql:
+    image: arm64v8/mysql:latest
     environment:
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_ROOT_PASSWORD=nextcloud
-      - MYSQL_PASSWORD=nextcloud
-    expose:
-      - 3306
+      MYSQL_DATABASE: testdb
+      MYSQL_ROOT_PASSWORD: uxp4life
+    volumes:
+     - 'mysql_data:/db_data'
+    command: [ "--default-authentication-plugin=mysql_native_password", "--lower_case_table_names=1", "--sql_mode=ALLOW_INVALID_DATES" ]
+    ports:
+     - "3307:3306"
+
+#  db:
+#    image: mariadb:10.5
+#    command: --default-authentication-plugin=mysql_native_password
+#    restart: always
+#    volumes:
+#      - db_data:/var/lib/mysql
+#    environment:
+#      - MYSQL_DATABASE=students
+#      - MYSQL_USER=root
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_PASSWORD=root
+#    expose:
+#      - 3306
 
 #  oracle-db:
 #    image: container-registry.oracle.com/database/enterprise:latest
@@ -27,5 +36,5 @@ services:
 #      - oracle-data:/opt/oracle/oradata
 
 volumes:
-  db_data:
+  mysql_data:
 #  oracle-data:

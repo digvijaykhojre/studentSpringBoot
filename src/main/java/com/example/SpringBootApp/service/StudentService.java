@@ -1,15 +1,18 @@
 package com.example.SpringBootApp.service;
 
 import com.example.SpringBootApp.dtos.Student;
-import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.List;
 
-@Service
-public class StudentService {
+public interface StudentService {
+    Student getStudent();
 
+    Student getStudent(int id);
 
-    public Student getStudent(){
-        return new Student("ajay","28",5, Collections.emptyList());
-    }
+    void createStudent(Student student);
+
+    List<Student> deleteStudent(int id);
+
+    void updateStudent(Student student);
+
 }
